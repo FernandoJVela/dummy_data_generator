@@ -6,14 +6,14 @@ import dummy_name_generator
 
 def check_names_availability():
     names_file_path = "random_names.txt"
-    if os.path.exists(names_file_path):
+    if ~os.path.exists(names_file_path):
         random_names = dummy_name_generator.generate_full_names(100)
         dummy_name_generator.save_to_txt(random_names)
 
 def get_random_name():
     with open("random_names.txt", 'r') as file:
         lines = file.readlines()
-        return random.choice(lines)
+        return random.choice(lines).rstrip()
 
 def generate_random_data(columns, num_rows):
     check_names_availability()    
@@ -29,9 +29,9 @@ def generate_random_data(columns, num_rows):
             elif col['type'] == 'Integer':
                 row[col['name']] = random.randint(1, 100)
             elif col['type'] == 'String':
-                first_entry = random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', k=random.randint(1, 10))
-                second_entry = random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', k=random.randint(1, 10))
-                row[col['name']] = ''.join(first_entry, ' ', second_entry)
+                first_entry = ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', k=random.randint(1, 10)))
+                second_entry = ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', k=random.randint(1, 10)))
+                row[col['name']] = ''.join(first_entry + ' ' + second_entry)
             elif col['type'] == 'Name':
                 row[col['name']] = get_random_name()
             elif col['type'] == 'ID':

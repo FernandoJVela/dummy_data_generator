@@ -2,10 +2,11 @@ import dummy_data_generator
 
 def run():
     columns = [
-        {"name": "ID", "type": "Integer"},
-        {"name": "Name", "type": "String"},
+        {"name": "ID", "type": "ID"},
+        {"name": "Name", "type": "Name"},
         {"name": "Price", "type": "Currency"},
-        {"name": "Discount", "type": "Percentage"}
+        {"name": "Discount", "type": "Percentage"},
+        {"name": "Description", "type": "String"},
     ]
     num_rows = 10
     output_format = 'json'  # or 'xml'
