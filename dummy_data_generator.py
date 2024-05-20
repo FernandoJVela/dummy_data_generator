@@ -3,6 +3,7 @@ import json
 import xml.etree.ElementTree as ET
 import os
 import dummy_name_generator
+from datetime import datetime, timedelta
 
 def check_names_availability():
     names_file_path = "random_names.txt"
@@ -14,6 +15,24 @@ def get_random_name():
     with open("random_names.txt", 'r') as file:
         lines = file.readlines()
         return random.choice(lines).rstrip()
+    
+def generate_random_email():
+    domains = ["example.com", "mail.com", "test.com"]
+    name = ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', k=random.randint(5, 10)))
+    domain = random.choice(domains)
+    return f"{name.lower()}@{domain}"
+
+def generate_random_date(start_date, end_date):
+    time_between_dates = end_date - start_date
+    days_between_dates = time_between_dates.days
+    random_number_of_days = random.randrange(days_between_dates)
+    random_date = start_date + timedelta(days=random_number_of_days)
+    return random_date.strftime("%Y-%m-%d")
+
+def generate_random_password(length=12):
+    characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()'
+    password = ''.join(random.choices(characters, k=length))
+    return password
 
 def generate_random_data(columns, num_rows):
     check_names_availability()    
@@ -40,6 +59,14 @@ def generate_random_data(columns, num_rows):
                     new_id = random.randint(1, num_rows*10)
                 row[col['name']] = new_id
                 used_ids.add(new_id)
+            elif col['type'] == 'Email':
+                row[col['name']] = generate_random_email()
+            elif col['type'] == 'Date':
+                start_date = datetime.strptime(col.get('start_date', '2000-01-01'), "%Y-%m-%d")
+                end_date = datetime.strptime(col.get('end_date', '2020-12-31'), "%Y-%m-%d")
+                row[col['name']] = generate_random_date(start_date, end_date)
+            elif col['type'] == 'Password':
+                row[col['name']] = generate_random_password()
         data.append(row)
     return data
 
