@@ -1,4 +1,5 @@
 import random
+import os
 
 first_names = ["John", "Emma", "Michael", "Sophia", "James", "Olivia", "Robert", "Ava", "William", "Isabella",
                "Carlos", "Maria", "Juan", "Ana", "Luis", "Sofia", "Diego", "Valentina", "Pedro", "Camila",
@@ -20,3 +21,14 @@ def save_to_txt(names_list):
     with open("random_names.txt", "w") as file:
         for name in names_list:
             file.write(name + "\n")
+
+def check_names_availability():
+    names_file_path = "random_names.txt"
+    if ~os.path.exists(names_file_path):
+        random_names = generate_full_names(100)
+        save_to_txt(random_names)
+
+def get_random_name():
+    with open("random_names.txt", 'r') as file:
+        lines = file.readlines()
+        return random.choice(lines).rstrip()    

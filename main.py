@@ -6,6 +6,7 @@ def run():
         {"name": "username", "type": "Name"},
         {"name": "email", "type": "Email"},
         {"name": "password", "type": "Password"},
+        {"name": "roles", "type": "Roles"},
         {"name": "createdon", "type": "Date", "start_date": "2020-01-01", "end_date": "2023-01-01"},
     ]
     num_rows = 25
